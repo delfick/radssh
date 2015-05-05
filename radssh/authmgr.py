@@ -299,7 +299,10 @@ class AuthManager(object):
                 else:
                     # Actual keys may not be loaded yet. Only loaded when actively used, so
                     # we don't prompt for passphrases unless we absolutely have to.
-                    if value not in self.deferred_keys:
+                    if type(value) is paramiko.AgentKey:
+                        key = value
+
+                    elif value not in self.deferred_keys:
                         # Not deferred - the value IS the key
                         key = value
                     elif not self.deferred_keys[value]:
